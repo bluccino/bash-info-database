@@ -82,7 +82,16 @@
          exit 1
       fi
 
-      echo "$3='"$4"'" >>$1/$2
+         # first remove the tag from the entry
+
+      FILE=$1/$2                       # path of record file
+      touch $FILE                      # make sure that record file exists
+      cat $FILE | sed "/$3=/d" >$FILE.tmp
+      mv $FILE.tmp $FILE
+
+         # finally append new attribute tag assignment
+
+      echo "$3='"$4"'" >>$FILE
       exit 0
    fi
 
