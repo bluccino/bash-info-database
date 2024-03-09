@@ -1,5 +1,7 @@
 #!/bin/bash
 # idb: manage/access info database
+# Copyright (c) 2024 Bluenetics GmbH
+# SPDX-License-Identifier: Apache-2.0
 
 #===============================================================================
 # idb -?;  idb --help   # show usage
@@ -20,7 +22,7 @@
          exit 0
       fi
       idb ---y 'example: create information database'
-      echo '  idb -c $ETC/@boards             #create @boards info database'
+      echo '  idb -c $ETC/@boards              #create @boards info database'
       idb ---y 'example: store board information to info database'
       echo '  idb -s $ETC/@boards n1 BOARD nrf52dk_nrf52832'
       echo '  idb -s $ETC/@boards n1 SEGGER 682805980'

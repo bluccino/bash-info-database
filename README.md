@@ -102,13 +102,47 @@ Referring to the previous example, recalling the `dir` and `info` values and ass
 The list of a tag/value assignments of a record can be listed as follows:
 
 ```
-    $ idb -l $MYIDB workdir
+    $ idb -l $MYIDB
+    work:
+    dir: path-to-workdir
+    info: my working folder
 ``` 
+
+## Other `idb` Commands
+
+Use `$ idb --help` to see all supported commands.
+
+```
+    $ idb --help
+    usage: manage/access info database (version 1.0.2)
+      idb -s <dbase> <key> <tag> <val> # store value in info database
+      VAL=`idb -r <dbase> <key> <tag>` # recall value from info database
+      idb -c <dbase>                   # create info database
+      idb -d <dbase> <key>             # delete IDB record related to key
+      idb -l <dbase>                   # list contents of info database
+      idb -l <dbase> <key>             # list IDB record related to key
+      idb -?                           # show usage
+      idb --help                       # comprehensive help
+      idb --version                    # print version
+    example: create information database
+      idb -c $ETC/@boards              #create @boards info database
+    example: store board information to info database
+      idb -s $ETC/@boards n1 BOARD nrf52dk_nrf52832
+      idb -s $ETC/@boards n1 SEGGER 682805980
+      idb -s $ETC/@boards n1 BRDID n1
+      idb -s $ETC/@boards n1 BRDINFO "Nordic 832dk #1"
+    example: recall board information from info database
+      BOARD=`idb -r $ETC/@boards n1 BOARD`
+      SEGGER=`idb -r $ETC/@boards n1 SEGGER`
+      BRDID=`idb -r $ETC/@boards n1 BRDID`
+      BRDINFO=`idb -r $ETC/@boards n1 BRDINFO
+``` 
+
 
 ## Conclusions
 
 * To store/recall settings/configuration information in a bash environment, database formats like JSON (Java Script Object Notation), YAML (Yet Another Markdown Language), TOML (Tom's Obvious, Minimal Language) and others have been developped.
-* Though these tools are powerful and ubiquitous in use, they are either running with native code or depend on pre-requisites, like a proper Python/Jave installation
+* Though existing tools, working with those database formats, are powerful and ubiquitous in use, they are either running with native code or depend on pre-requisites, like a proper Python/Jave installation
 * One big advantage of `idb` is that settings/configuration information can be stored/recalled in `bash` shells without pre-requisites.
 * The utilization of `idb` is mainly as a helper tool for other bash scripts which manage a configurable environment without the requirement of pre-requisites other than a standard `bash` environment.
 * Since `bash` shells are now available on all three main platforms (Linux, Mac-OS and Windows/WSL), `idb` provides minimal basic database functionality running on all three common platforms.  
