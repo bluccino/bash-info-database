@@ -1,4 +1,4 @@
-![Info Database](./.vamos/info-database.jpg)
+![Info Database](etc/info-database.jpg)
 
 --------------------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ Imagine a bash script `wd` (working directory) which is capable of two tasks:
 	2) change the current directory according to the path assigned with a given label
 
 Since, for the second task, script `wd` needs to change the current directory, it cannot run in a sub shell. Thus, we must `source` the
-script, invoking it by either `$ source wd ...` or `$ . wd ...`. 
+script, invoking it by either `$ source wd ...` or `$ . wd ...`.
 The syntax for our `wd` command might be designed as follows:
 
     $ . wd -! work: 'my working folder'  # define label work:
@@ -41,7 +41,7 @@ Let the info database name be `my-idb` (in fact any name of choice will do the j
 
 ```
     $ MYIDB=/path-to/my-idb  # full path to info database 'my-idb'
-    $ idb -c $MYIDB          # create info database 'my-idb' at path '/path-to' 
+    $ idb -c $MYIDB          # create info database 'my-idb' at path '/path-to'
 ```
 
 ## Storing an Info Database Record
@@ -66,7 +66,7 @@ The following `idb` commands store the two tag/value pairs into a data record ad
     $ idb -s $MYIDB work info 'my working folder'
 ```
 
-Since info database records are stored as files in a directory, which has a name matching the key, we can easily investigate, how `idb` stores 
+Since info database records are stored as files in a directory, which has a name matching the key, we can easily investigate, how `idb` stores
 the information.
 
 ```
@@ -82,15 +82,15 @@ To recall the `<value>` information related to a given `<tag>` of a record adres
 ```
     $ idb -r <dbase> <key> <tag>
     <value>
-``` 
+```
 
 To assign a retrieved value to an environment variable VALUE we use back-quotes.
 
 ```
-    $ VALUE=`idb -r <dbase> <key> <tag>` 
-``` 
+    $ VALUE=`idb -r <dbase> <key> <tag>`
+```
 
-Referring to the previous example, recalling the `dir` and `info` values and assigning it to environment variables `DIR` and `INFO` is achieved as follows: 
+Referring to the previous example, recalling the `dir` and `info` values and assigning it to environment variables `DIR` and `INFO` is achieved as follows:
 
 ```
     $ DIR=`idb -r $MYIDB work dir`     # retrieve dir value
@@ -106,7 +106,7 @@ The list of a tag/value assignments of a record can be listed as follows:
     work:
     dir: path-to-workdir
     info: my working folder
-``` 
+```
 
 ## Other `idb` Commands
 
@@ -136,7 +136,7 @@ Use `$ idb --help` to see all supported commands.
       SEGGER=`idb -r $ETC/@boards n1 SEGGER`
       BRDID=`idb -r $ETC/@boards n1 BRDID`
       BRDINFO=`idb -r $ETC/@boards n1 BRDINFO
-``` 
+```
 
 
 ## Conclusions
