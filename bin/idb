@@ -1,38 +1,36 @@
 #!/bin/bash
 # idb: manage/access info database
-# Copyright (c) 2024 Bluenetics GmbH
-# SPDX-License-Identifier: Apache-2.0
 
 #===============================================================================
 # idb -?;  idb --help   # show usage
 #===============================================================================
 
    if [ "$*" == "-?" ] || [ "$*" == "--help" ] || [ "$*" == "--?" ]; then
-      ec -g "usage: manage/access info database (version `idb --version`)"
-      echo  '  idb -s <dbase> <key> <tag> <val> # store value in info database'
-      echo  '  VAL=`idb -r <dbase> <key> <tag>` # recall value from info database'
-      echo  '  idb -c <dbase>                   # create info database'
-      echo  '  idb -d <dbase> <key>             # delete IDB record related to key'
-      echo  '  idb -l <dbase>                   # list contents of info database'
-      echo  '  idb -l <dbase> <key>             # list IDB record related to key'
-      echo  '  idb -?                           # show usage'
-      echo  '  idb --help                       # comprehensive help'
-      echo  '  idb --version                    # print version'
+      idb ---g "usage: manage/access info database (version `idb --version`)"
+      echo '  idb -s <dbase> <key> <tag> <val> # store value in info database'
+      echo '  VAL=`idb -r <dbase> <key> <tag>` # recall value from info database'
+      echo '  idb -c <dbase>                   # create info database'
+      echo '  idb -d <dbase> <key>             # delete IDB record related to key'
+      echo '  idb -l <dbase>                   # list contents of info database'
+      echo '  idb -l <dbase> <key>             # list IDB record related to key'
+      echo '  idb -?                           # show usage'
+      echo '  idb --help                       # comprehensive help'
+      echo '  idb --version                    # print version'
       if [ "$*" == "-?" ]; then
          exit 0
       fi
-      ec -y 'example: create information database'
-      echo  '  idb -c $ETC/@boards              #create @boards info database'
-      ec -y 'example: store board information to info database'
-      echo  '  idb -s $ETC/@boards n1 BOARD nrf52dk_nrf52832'
-      echo  '  idb -s $ETC/@boards n1 SEGGER 682805980'
-      echo  '  idb -s $ETC/@boards n1 BRDID n1'
-      echo  '  idb -s $ETC/@boards n1 BRDINFO "Nordic 832dk #1"'
-      ec -y 'example: recall board information from info database'
-      echo  '  BOARD=`idb -r $ETC/@boards n1 BOARD`'
-      echo  '  SEGGER=`idb -r $ETC/@boards n1 SEGGER`'
-      echo  '  BRDID=`idb -r $ETC/@boards n1 BRDID`'
-      echo  '  BRDINFO=`idb -r $ETC/@boards n1 BRDINFO`'
+      idb ---y 'example: create information database'
+      echo '  idb -c $ETC/@boards             #create @boards info database'
+      idb ---y 'example: store board information to info database'
+      echo '  idb -s $ETC/@boards n1 BOARD nrf52dk_nrf52832'
+      echo '  idb -s $ETC/@boards n1 SEGGER 682805980'
+      echo '  idb -s $ETC/@boards n1 BRDID n1'
+      echo '  idb -s $ETC/@boards n1 BRDINFO "Nordic 832dk #1"'
+      idb ---y 'example: recall board information from info database'
+      echo '  BOARD=`idb -r $ETC/@boards n1 BOARD`'
+      echo '  SEGGER=`idb -r $ETC/@boards n1 SEGGER`'
+      echo '  BRDID=`idb -r $ETC/@boards n1 BRDID`'
+      echo '  BRDINFO=`idb -r $ETC/@boards n1 BRDINFO`'
       exit 0
    fi
 
@@ -41,8 +39,7 @@
 #===============================================================================
 
    if [ "$*" == "--version" ] || [ "$*" == "--v" ]; then
-      echo "1.0.2";
-      exit 0
+      echo "1.0.1"; exit 0
    fi
 
 #===============================================================================
@@ -53,18 +50,18 @@
       shift
       if [ "$1" == "" ] || [ "$2" != "" ]
       then
-         ec -r '  error: idb -c '$*
+         idb ---r '  error: idb -c '$*
          idb -?;  exit 1
       fi
 
       if [ -d "$1" ] || [ -f "$1" ]; then
-         ec -r '  cannot create info database (since exists): ' $1
+         idb ---r '  cannot create info database (since exists): ' $1
          exit 1
       fi
 
       mkdir $1 && exit 0
 
-      ec -r '  failed to create info database: ' $1
+      idb ---r '  failed to create info database: ' $1
       exit 1
    fi
 
@@ -76,25 +73,16 @@
       shift
       if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] || \
          [ "$4" == "" ] || [ "$5" != "" ]; then
-         ec -r '  error: idb -s '$*
+         idb ---r '  error: idb -s '$*
          idb -?;  exit 1
       fi
 
       if [ ! -d $1 ]; then
-         ec -r "  idb: non existing info database directory: $1"
+         idb ---r "  idb: non existing info database directory: $1"
          exit 1
       fi
 
-         # first remove the tag from the entry
-
-      FILE=$1/$2                       # path of record file
-      touch $FILE                      # make sure that record file exists
-      cat $FILE | sed "/$3=/d" >$FILE.tmp
-      mv $FILE.tmp $FILE
-
-         # finally append new attribute tag assignment
-
-      echo "$3='"$4"'" >>$FILE
+      echo "$3='"$4"'" >>$1/$2
       exit 0
    fi
 
@@ -106,12 +94,12 @@
       shift
       if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" == "" ] ||  [ "$4" != "" ]
       then
-         ec -r '  error: idb -r '$*
+         idb ---r '  error: idb -r '$*
          idb -?;  exit 1
       fi
 
       if [ ! -d $1 ]; then
-         ec -r "  idb: non existing info database directory: $1"
+         idb ---r "  idb: non existing info database directory: $1"
          exit 1
       fi
 
@@ -133,12 +121,12 @@
    if [ "$1" == "-d" ]; then
       shift
       if [ "$1" == "" ] || [ "$2" == "" ] || [ "$3" != "" ]; then
-         ec -r '  error: idb -d '$*
+         idb ---r '  error: idb -d '$*
          idb -?;  exit 1
       fi
 
       if [ ! -d $1 ]; then
-         ec -r "  idb: non existing info database directory: $1"
+         idb ---r "  idb: non existing info database directory: $1"
          exit 1
       fi
 
@@ -158,16 +146,16 @@
    if [ "$1" == "-l" ] && [ "$2" != "" ]; then
       shift
       if [ ! -d $1 ]; then
-         ec -r "  idb: non existing info database directory: $1"
+         idb ---r "  idb: non existing info database directory: $1"
          exit 1
       fi
 
       if [ "$2" != "" ]; then   # list IDB record
          if [ ! -f $1/$2 ]; then
-            ec -r "non existing info database file: $1/$2"
+            idb ---r "non existing info database file: $1/$2"
             exit 1
          fi
-         ec -g "$2":
+         idb ---g "$2":
          cat $1/$2 | awk '{ print "  "$0 }' | sed "s/='/: /" | sed "s/'//"
       else                      # list contents of entire IDB
          KEYS=`ls $1`
@@ -180,9 +168,30 @@
    fi
 
 #===============================================================================
+# idb ---r 'text arg'   # internal helper: echo in red color
+# idb ---g 'text arg'   # internal helper: echo in green color
+# idb ---y 'text arg'   # internal helper: echo in yellow color
+#===============================================================================
+
+   if [ "$1" == "---r" ]; then
+      printf "\x1b[31m";  shift;  echo "$*";  printf "\x1b[0m"
+      exit 0
+   fi
+
+   if [ "$1" == "---g" ]; then
+      printf "\x1b[32m";  shift;  echo "$*";  printf "\x1b[0m"
+      exit 0
+   fi
+
+   if [ "$1" == "---y" ]; then
+      printf "\x1b[33m";  shift;  echo "$*";  printf "\x1b[0m"
+      exit 0
+   fi
+
+#===============================================================================
 # cannot deal with anything else ...
 #===============================================================================
 
    idb -?
-   ec -r 'bad command: 'idb $*
+   idb ---r 'bad command: 'idb $*
    exit 1
