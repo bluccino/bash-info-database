@@ -3,6 +3,7 @@
 --------------------------------------------------------------------------------
 
 # Info Database
+
 Info Database (`idb`) is a bash script to manage simple databases for store/recall of configuration information. Typically, `idb` is not directly invoked from `bash` command shell. Rather, `idb` might be consulted as a helper in other scripts, which manage a configurable environment.
 
 ## Example: Working Directory
@@ -65,6 +66,7 @@ The following `idb` commands store the two tag/value pairs into a data record ad
     $ idb -s $MYIDB work dir path-to-workdir
     $ idb -s $MYIDB work info 'my working folder'
 ```
+
 
 Since info database records are stored as files in a directory, which has a name matching the key, we can easily investigate, how `idb` stores
 the information.
