@@ -1,9 +1,9 @@
-![Info Database](./.vamos/info-database.jpg)
+![Info Database](etc/info-database.jpg)
 
 --------------------------------------------------------------------------------
 
 # Info Database
-Info Database (`idb`) is a bash script to manage simple databases controlling environment settings. Typically, `idb` is not directly used 
+Info Database (`idb`) is a bash script to manage simple databases controlling environment settings. Typically, `idb` is not directly used
 from `bash` command shell but as a helper for other scripts which manage
 environment settings.
 
@@ -39,7 +39,7 @@ Let the info database name be `my-idb` (in fact any name of choice will do the j
 
 ```
     $ MYIDB=/path-to/my-idb  # full path to info database 'my-idb'
-    $ idb -c $MYIDB          # create info database 'my-idb' at path 'path-to' 
+    $ idb -c $MYIDB          # create info database 'my-idb' at path 'path-to'
 ```
 
 ## Storing an Info Database Record
@@ -64,7 +64,7 @@ The following `idb` commands stores the two tag/value pairs into a data record a
     $ idb -s $MYIDB work info 'my working folder'
 ```
 
-Since info database records are stored as files in a directory, which has a name matching to the key, we can easily investigate, how `idb` stores 
+Since info database records are stored as files in a directory, which has a name matching to the key, we can easily investigate, how `idb` stores
 the information.
 
 ```
@@ -78,16 +78,16 @@ the information.
 To recall the `<value>` information related to a given `<tag>` of a record adressed by `<key>` script `idb` is called with the recall option `-r`, which prints the `<value>` information to standard output.
 
 ```
-    $ idb -r <dbase> <key> <tag> 
-``` 
+    $ idb -r <dbase> <key> <tag>
+```
 
 To assign a retrieved value to an environment variable VALUE we use back-quotes.
 
 ```
-    $ VALUE=`idb -r <dbase> <key> <tag>` 
-``` 
+    $ VALUE=`idb -r <dbase> <key> <tag>`
+```
 
-Referring to the previous example, recalling the `dir` and `info` values and assigning it to environment variables `DIR` and `INFO` is achieved as follows: 
+Referring to the previous example, recalling the `dir` and `info` values and assigning it to environment variables `DIR` and `INFO` is achieved as follows:
 
 ```
     $ DIR=`idb -s $MYIDB work dir`     # retrieve dir value
@@ -99,5 +99,5 @@ Referring to the previous example, recalling the `dir` and `info` values and ass
 * To store/recall settings/configuration information in a bash environment, database formats like JSON (Java Script Object Notation), YAML (Yet Another Markdown Language), TOML (Tom's Obvious, Minimal Language) and others have been developped.
 * Though powerful and ubiquitous in use require tools running on native code or depending on pre-requisites, like proper Python/Jave installation
 * With `idb` settings/configuration information can be stored/recalled in `bash` shells without pre-requisites.
-* The utilization of `idb` is mainly as helper tool in other bash scripts. 
+* The utilization of `idb` is mainly as helper tool in other bash scripts.
 * Since `bash` shells are now available on all three main platforms (Linux, Mac-OS and Windows/WSL), `idb` provides minimal basic database functionality running on all three common platforms.  
